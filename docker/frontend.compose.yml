@@ -1,0 +1,20 @@
+services:
+  frontend:
+    build:
+      context: ..
+      dockerfile: docker/frontend.Dockerfile
+    image: tanstack-todo-frontend
+    command: ['npm', 'run', 'dev', '--', '--host', '0.0.0.0']
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=${DATABASE_URL}
+    depends_on:
+      - db
+    networks:
+      - tanstack
+    restart: unless-stopped
+networks:
+  tanstack:
+    name: tanstack-network
