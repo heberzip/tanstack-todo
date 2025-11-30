@@ -1,6 +1,11 @@
 [build]
   command = "vite build"
-  dir = "dist/client"
+  publish = "dist/client"
+
+[functions]
+  directory = "dist/server/netlify"
+
+
 [dev]
   command = "vite dev"
   port = 3000
