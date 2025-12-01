@@ -188,5 +188,5 @@ code {
 }
 
 @utility container {
-  @apply mx-auto max-w-4xl p-[2rem];
+  @apply mx-auto max-w-4xl p-[1.2rem] md:p-[2rem];
 }

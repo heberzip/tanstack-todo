@@ -1,4 +1,4 @@
-import { TodoForm } from '@/components/todo-form'
+import { TodoForm } from '@/components/todos/todo-form'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -7,6 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { TruncatedText } from '@/components/ui/truncated-text'
 import { getTodo } from '@/service/todos'
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { ArrowLeftIcon } from 'lucide-react'
@@ -37,7 +38,9 @@ function RouteComponent() {
         <CardHeader>
           <CardTitle>
             Edit todo -{'  '}
-            <span className="text-muted-foreground italic">{todo.name}</span>
+            <span className="text-muted-foreground italic">
+                <TruncatedText text={todo.name} maxChars={40} />
+            </span>
           </CardTitle>
           <CardDescription>
             Edit the selected todo to update the task.

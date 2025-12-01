@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { useState } from 'react'
 import { BanIcon, CirclePlusIcon, LoaderIcon } from 'lucide-react'
+import { Textarea } from '../ui/textarea'
 
 type FORM_MODE = 'create' | 'edit'
 
@@ -60,8 +61,20 @@ export function TodoForm({ mode, initialTodo }: TodoFormProps) {
           return (
             <div className="flex flex-col gap-2 w-full">
               <Label htmlFor={field.name}>Todo</Label>
-              <div className="flex gap-6 items-start">
+              <div className="flex flex-col md:flex-row gap-6 items-start">
                 <div className="flex flex-col gap-1 w-full">
+                  {/* Mobile: Textarea */}
+                  <Textarea
+                    id={field.name}
+                    value={field.state.value}
+                    onBlur={field.handleBlur}
+                    onChange={(e) => field.handleChange(e.target.value)}
+                    placeholder="Enter a todo"
+                    rows={3}
+                    className="block md:hidden"
+                  />
+
+                  {/* Desktop: Input */}
                   <Input
                     id={field.name}
                     type="text"
@@ -69,7 +82,7 @@ export function TodoForm({ mode, initialTodo }: TodoFormProps) {
                     onBlur={field.handleBlur}
                     onChange={(e) => field.handleChange(e.target.value)}
                     placeholder="Enter a todo"
-                    className="w-full"
+                    className="hidden md:block"
                   />
                   <FieldInfo field={field} />
                 </div>
@@ -108,28 +121,30 @@ export function TodoForm({ mode, initialTodo }: TodoFormProps) {
                       : setIsDisabled(false)
 
                     return (
-                      <Button
-                        type="submit"
-                        disabled={isDisabled}
-                        className="group"
-                      >
-                        {isSubmitting ? (
-                          <div className="flex gap-2 items-center">
-                            <LoaderIcon className="animate-spin duration-800" />{' '}
-                            {mode === 'create' ? 'Creating…' : 'Updating…'}
-                          </div>
-                        ) : isDisabled ? (
-                          <div className="flex gap-2 items-center">
-                            <BanIcon />{' '}
-                            {mode === 'create' ? 'Create todo' : 'Edit todo'}
-                          </div>
-                        ) : (
-                          <div className="flex gap-2 items-center">
-                            <CirclePlusIcon className="group-hover:animate-pulse" />{' '}
-                            {mode === 'create' ? 'Create todo' : 'Edit todo'}
-                          </div>
-                        )}
-                      </Button>
+                      <div className="flex w-full md:w-auto justify-end">
+                        <Button
+                          type="submit"
+                          disabled={isDisabled}
+                          className="group"
+                        >
+                          {isSubmitting ? (
+                            <div className="flex gap-2 items-center">
+                              <LoaderIcon className="animate-spin duration-800" />{' '}
+                              {mode === 'create' ? 'Creating…' : 'Updating…'}
+                            </div>
+                          ) : isDisabled ? (
+                            <div className="flex gap-2 items-center">
+                              <BanIcon />{' '}
+                              {mode === 'create' ? 'Create todo' : 'Edit todo'}
+                            </div>
+                          ) : (
+                            <div className="flex gap-2 items-center">
+                              <CirclePlusIcon className="group-hover:animate-pulse" />{' '}
+                              {mode === 'create' ? 'Create todo' : 'Edit todo'}
+                            </div>
+                          )}
+                        </Button>
+                      </div>
                     )
                   }}
                 </form.Subscribe>
