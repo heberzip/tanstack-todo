@@ -19,11 +19,15 @@ import {
   AlertDialogTrigger,
 } from '../ui/alert-dialog'
 import { TruncatedText } from '../ui/truncated-text'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export function TodoRow({ id, name, createdAt, isComplete }: Todo) {
   const router = useRouter()
   const [isCompleted, setIsCompleted] = useState(isComplete)
+
+  useEffect(() => {
+    setIsCompleted(isComplete)
+  }, [isComplete])
 
   const deleteTodoFn = useServerFn(deleteTodo)
   const toggleTodoFn = useServerFn(toggleTodo)

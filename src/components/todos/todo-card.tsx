@@ -20,11 +20,15 @@ import {
 } from '../ui/alert-dialog'
 import { Label } from '../ui/label'
 import { TruncatedText } from '../ui/truncated-text'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export function TodoCard({ id, name, createdAt, isComplete }: Todo) {
   const router = useRouter()
   const [isCompleted, setIsCompleted] = useState(isComplete)
+
+  useEffect(() => {
+    setIsCompleted(isComplete)
+  }, [isComplete])
 
   const deleteTodoFn = useServerFn(deleteTodo)
   const toggleTodoFn = useServerFn(toggleTodo)
@@ -60,14 +64,14 @@ export function TodoCard({ id, name, createdAt, isComplete }: Todo) {
         <Label
           htmlFor={'todo-checkbox-' + id}
           className={cn(
-            'block font-medium text-sm', 
+            'block font-medium text-sm',
             isCompleted && 'text-muted-foreground line-through italic',
           )}
         >
           <TruncatedText
             text={name}
             maxChars={40}
-            className="block w-full truncate" 
+            className="block w-full truncate"
           />
         </Label>
         <div className="text-xs text-muted-foreground">
